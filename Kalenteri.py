@@ -23,9 +23,9 @@ def valikko():
             tapahtumat = [1, 10, 20] # Paikanpitäjä tapahtumat // Tähän koodi, joka avaa tekstitiedoston, jossa tallennetut tapahtumat
             tarkastelu(vuosi, kuukausi, tapahtumat)
         elif valinta == 2:
-            tapahtuman_lisäys(vuosi, kuukausi, tapahtumat)
+            tapahtuman_lisäys()
         elif valinta == 3:
-            poista_tapahtuma(vuosi, kuukausi, tapahtumat)
+            poista_tapahtuma()
         else:
             print("Valitse numero (1-5)")
 
@@ -56,15 +56,18 @@ def tarkastelu(vuosi, kuukausi, tapahtumat):
     print(tabulate(muokattu_kuukausi, headers=otsikot, tablefmt="grid"))
 
 # Lisää tapahtuman tiedostoon kalenteri.txt //Ehkä toimii??
-def tapahtuman_lisäys(vuosi, kuukausi, tapahtumat):
+def tapahtuman_lisäys():
     try:
         with open(TIEDOSTO, "a") as file: # Avataan tiedosto muokkaus modessa
             print("Tapahtuman lisäys -- esim. 2025 3 07")
-            vuosi = int(input("Kerro vuosi: "))
-            kuukausi = int(input("Kerro kuukausi: "))
-            päivä = int(input("Kerro päivä: "))
-            tapahtuman_kuvaus = str(input("Kerro tapahtuman nimi"))
-            tietue = [vuosi, kuukausi, päivä, tapahtuman_kuvaus] # Otetaan tapahtumasta tiedot käyttäjältä ja talletetaan ne tietue muuttujaan
+            try:
+                vuosi = int(input("Kerro vuosi: ")) 
+                kuukausi = int(input("Kerro kuukausi: ")) # Kerätään käyttäjältä tiedot vuodesta, kuukaudesta ja päivästä
+                päivä = int(input("Kerro päivä: "))
+            except ValueError: # Virhe, jos käyttäjä syöttää muuta, kuin kokonaislukuja
+                print("Virheellinen syöte. Anna numerot vuodelle, kuukaudelle ja päivälle.")
+            tapahtuman_kuvaus = (input("Kerro tapahtuman nimi: "))
+            tietue = f"{vuosi}, {kuukausi}, {päivä}, {tapahtuman_kuvaus}" # Talletetaan tiedot muuttujaan tietue
             file.write(tietue + "\n") # Kirjoitetaan tiedostoon haluttu tietue + rivinvaihto
             print("\nTapahtuma tallennettu onnistuneesti. ")
     except FileNotFoundError:
@@ -97,7 +100,7 @@ def poista_tapahtuma(vuosi, kuukausi, tapahtumat):
 
 
 def main():
-
+    print("-" * 33)
     print("Tervetuloa käyttämään kalenteria! ")
     print("-" * 33)
     
