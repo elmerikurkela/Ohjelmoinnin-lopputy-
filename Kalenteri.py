@@ -10,8 +10,6 @@ def valikko():
     # Looppi, jotta ohjelma pyörii, kunnes käyttäjä valitsee lopettaa ///KESKEN!
     while True:
         # Printit
-        print("Tervetuloa käyttämään kalenteria! ")
-        print("-" * 33)
         print("\nValitse toiminto:")
         print("1. Tarkastele kalenteria")
         print("2. Lisää tapahtuma")
@@ -100,6 +98,8 @@ def poista_tapahtuma(vuosi, kuukausi, tapahtumat):
 
 def main():
 
+    print("Tervetuloa käyttämään kalenteria! ")
+    print("-" * 33)
     
     valikko()
 
