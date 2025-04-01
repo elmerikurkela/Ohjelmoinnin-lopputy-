@@ -33,6 +33,7 @@ def valikko():
 
 # Lukee tapahtumat tiedostosta ja lisää ne listalle //vitust kesken
 def lue_tapahtumat():
+    pass
     tapahtumat = []
     try:
         with open(TIEDOSTO, "r") as file:
