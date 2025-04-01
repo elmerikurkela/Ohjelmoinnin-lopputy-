@@ -2,6 +2,8 @@ import calendar
 from tabulate import tabulate
 import colorama
 
+colorama.init(autoreset=True)  # Alustaa coloraman
+
 # Määritellään oikea tiedoston nimi
 TIEDOSTO = "kalenteri.txt"
 
@@ -45,7 +47,7 @@ def tarkastelu(vuosi, kuukausi, tapahtumat):
             if paiva == 0:  # Tyhjät päivät
                 muokattu_viikko.append("")
             elif paiva in tapahtumat:  # Tapahtumapäivät
-                muokattu_viikko.append(f"{paiva}*")
+                muokattu_viikko.append(f"{colorama.Fore.RED}{paiva}*{colorama.Style.RESET_ALL}")
             else:  # Tavalliset päivät
                 muokattu_viikko.append(str(paiva))
         muokattu_kuukausi.append(muokattu_viikko)
