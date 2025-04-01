@@ -57,12 +57,16 @@ def tarkastelu(vuosi, kuukausi, tapahtumat):
     print(f"\n{calendar.month_name[kuukausi]} {vuosi}".center(30))
     print(tabulate(muokattu_kuukausi, headers=otsikot, tablefmt="grid"))
 
-# Lisää tapahtuman tiedostoon kalenteri.txt //Tarvii tietojenkäsittely parannuksen
+# Lisää tapahtuman tiedostoon kalenteri.txt //Ehkä toimii??
 def tapahtuman_lisäys(vuosi, kuukausi, tapahtumat):
     try:
         with open(TIEDOSTO, "a") as file: # Avataan tiedosto muokkaus modessa
             print("Tapahtuman lisäys -- esim. 2025 3 07")
-            tietue = input("\nKerro vuosi, kuukausi ja päivä: ")
+            vuosi = int(input("Kerro vuosi: "))
+            kuukausi = int(input("Kerro kuukausi: "))
+            päivä = int(input("Kerro päivä: "))
+            tapahtuman_kuvaus = str(input("Kerro tapahtuman nimi"))
+            tietue = [vuosi, kuukausi, päivä, tapahtuman_kuvaus] # Otetaan tapahtumasta tiedot käyttäjältä ja talletetaan ne tietue muuttujaan
             file.write(tietue + "\n") # Kirjoitetaan tiedostoon haluttu tietue + rivinvaihto
             print("\nTapahtuma tallennettu onnistuneesti. ")
     except FileNotFoundError:
@@ -101,7 +105,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-print('helloworld')
-
-lol 
