@@ -22,7 +22,7 @@ def valikko():
         if valinta == 1:
             vuosi = int(input("Anna vuosi: ")) # //TÄHÄN TRY WITH
             kuukausi = int(input("Anna kuukausi: "))
-            tapahtumat = [1, 10, 20] # Paikanpitäjä tapahtumat // Tähän koodi, joka avaa tekstitiedoston, jossa tallennetut tapahtumat
+            tapahtumat = lue_tapahtumat() # Paikanpitäjä tapahtumat // Tähän koodi, joka avaa tekstitiedoston, jossa tallennetut tapahtumat
             tarkastelu(vuosi, kuukausi, tapahtumat)
         elif valinta == 2:
             tapahtuman_lisäys()
@@ -30,6 +30,21 @@ def valikko():
             poista_tapahtuma()
         else:
             print("Valitse numero (1-5)")
+
+# Lukee tapahtumat tiedostosta ja lisää ne listalle //vitust kesken
+def lue_tapahtumat():
+    tapahtumat = []
+    try:
+        with open(TIEDOSTO, "r") as file:
+            for rivi in file:
+                try:
+                    osat = rivi.strip().split(" ", 3)
+                    if len(osat) == 4:
+                        vuosi, kuukausi, päivä, kuvaus = osat:
+
+               
+    except FileNotFoundError:
+        print("Virhe tiedoston hakemisessa.")
 
 
 # Tulostaa kuukausikalenterin ja merkitsee tapahtumapäivät tähdellä (*) //Ehkä toimii about oikein
@@ -47,7 +62,7 @@ def tarkastelu(vuosi, kuukausi, tapahtumat):
             if paiva == 0:  # Tyhjät päivät
                 muokattu_viikko.append("")
             elif paiva in tapahtumat:  # Tapahtumapäivät
-                muokattu_viikko.append(f"{colorama.Fore.RED}{paiva}*{colorama.Style.RESET_ALL}")
+                muokattu_viikko.append(f"{colorama.Fore.RED}{paiva}*{colorama.Style.RESET_ALL}") # Lisätään punainen väri tapahtumapäiville
             else:  # Tavalliset päivät
                 muokattu_viikko.append(str(paiva))
         muokattu_kuukausi.append(muokattu_viikko)
