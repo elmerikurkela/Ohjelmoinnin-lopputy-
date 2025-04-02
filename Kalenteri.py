@@ -74,14 +74,17 @@ def tarkastelu(vuosi, kuukausi, tapahtumat):
     kalenteri = calendar.TextCalendar(firstweekday=calendar.MONDAY)
     kuukauden_paivat = kalenteri.monthdayscalendar(vuosi, kuukausi)
 
+    # Haetaan tapahtumat annetulle vuodelle ja kuukaudelle
+    tapahtuma_paivat = {päivä for (päivä, _) in tapahtumat.get((vuosi, kuukausi), [])}
+
     # Muokataan kalenterin päivät ja lisätään tähdet tapahtumapäiville
     muokattu_kuukausi = []
-    for viikko in kuukauden_paivat:
+    for viikko in kuukauden_paivat: # Käydään läpi viikot
         muokattu_viikko = []
-        for paiva in viikko:
-            if paiva == 0:  # Tyhjät päivät
+        for paiva in viikko: # Käydään läpi viikonpäivät
+            if paiva == 0:  # Tyhjät kohdat kalenterissa ennen kuukauden alkua
                 muokattu_viikko.append("")
-            elif paiva in tapahtumat:  # Tapahtumapäivät
+            elif paiva in tapahtumat:  # Jos päivälle on tapahtuma
                 muokattu_viikko.append(f"{colorama.Fore.RED}{paiva}*{colorama.Style.RESET_ALL}") # Lisätään punainen väri tapahtumapäiville
             else:  # Tavalliset päivät
                 muokattu_viikko.append(str(paiva))
