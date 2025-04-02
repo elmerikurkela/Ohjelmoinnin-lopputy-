@@ -142,7 +142,25 @@ def poista_tapahtuma(vuosi, kuukausi, tapahtumat):
     except OSError as e:
         print(f"Virhe tiedostoon kirjoittamisessa: {e}") # Virheilmoitus muille tiedostovirheille
 
-
+def muokkaa_tapahtumaa():
+    muokkaus = input('Mitä haluat muokata? (Tapahtuma, Päivämäärä):')
+    infile = open(TIEDOSTO,"w") #Avataan tiedosto lukutilassa
+    if muokkaus == "Tapahtuma":
+        vanha_tapahtuma = input("Mikä tapahtuma halutaan muokata?")
+        uusi_tapahtuma = input("Mikä on uusi tapahtuma?")
+        for rivi in infile:
+            if vanha_tapahtuma in rivi:
+                rivi = rivi.replace(vanha_tapahtuma, uusi_tapahtuma)
+                print(f"Tapahtuma '{vanha_tapahtuma}' on muutettu muotoon '{uusi_tapahtuma}'.")
+    elif muokkaus == "Päivämäärä":
+        vanha_pvm = input("Mikä päivämäärä halutaan muokata? (esim. 2025 3 07)")
+        uusi_pvm = input("Mikä on uusi päivämäärä? (esim. 2025 3 07)")
+        for rivi in infile:
+            if vanha_pvm in rivi:
+                rivi = rivi.replace(vanha_pvm, uusi_pvm)
+                print(f"Päivämäärä '{vanha_pvm}' on muutettu muotoon '{uusi_pvm}'.")
+    else:
+        print("Virheellinen syöte.")
 
 
 
