@@ -1,6 +1,5 @@
-
-2025, 4, 1, Rastikierros
-
-2025, 4, 2, Musavisa
-2025, 4, 5, Lauantai
-2025, 4, 27, Sunnuntai
+2025, 4, 27, 11:00 Sunnuntai
+2025, 4, 9, 16:30, IconicDuos
+2025, 4, 10, 17:00, EerikinkadunApprot
+2025, 4, 11, 12:30, Testi
+2025, 4, 20, 22:22, Tapahtuma3

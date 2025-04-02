@@ -33,7 +33,7 @@ def valikko():
         if valinta == 1:
             vuosi = int(input("Anna vuosi: "))
             kuukausi = int(input("Anna kuukausi: "))
-            tapahtumat = lue_tapahtumat() # Paikanpitäjä tapahtumat // Tähän koodi, joka avaa tekstitiedoston, jossa tallennetut tapahtumat
+            tapahtumat = lue_tapahtumat()
             tarkastelu(vuosi, kuukausi, tapahtumat)
         elif valinta == 2:
             tapahtuman_lisäys()
@@ -54,11 +54,14 @@ def lue_tapahtumat():
         with open(TIEDOSTO, "r") as file: # Avataan tiedosto lukutilassa
             for rivi in file: # Käydään läpi rivi kerrallaan
                 try:
-                    osat = rivi.strip().split(", ", 3) # Pilkotaan rivi pilkkujen ja välilyöntien kohdalta
-                    if len(osat) == 4: # Varmistetaan, että on oikea määrä osia
-                        vuosi, kuukausi, päivä, kuvaus = osat # Nimetään osat
-                        vuosi, kuukausi, päivä = int(vuosi), int(kuukausi), int(päivä) # Muutetaan kokonaisluvuiksi
-                        tapahtumat.setdefault((vuosi, kuukausi), []).append((päivä, kuvaus)) # Lisätään tapahtuma sanakirjaan niin, että vuodella ja kuukaudella on oma lista
+                    osat = rivi.strip().split(", ") # Pilkotaan rivi pilkkujen ja välilyöntien kohdalta
+                    if len(osat) == 5: # Varmistetaan, että on oikea määrä osia
+                        vuosi, kuukausi, päivä, kellonaika, kuvaus = osat # Nimetään osat
+                        try:
+                            vuosi, kuukausi, päivä = int(vuosi), int(kuukausi), int(päivä) # Muutetaan kokonaisluvuiksi
+                            tapahtumat.setdefault((vuosi, kuukausi), []).append((päivä, kellonaika, kuvaus)) # Lisätään tapahtuma sanakirjaan niin, että vuodella ja kuukaudella on oma lista
+                        except ValueError:
+                            print(f"Virheellinen tieto rivillä: {rivi.strip()} ohitetaan")
                 except ValueError:
                     print(f"Virheelinen rivi: {rivi.strip()} ohitetaan.")
                 
@@ -77,8 +80,8 @@ def tarkastelu(vuosi, kuukausi, tapahtumat):
     kuukauden_paivat = kalenteri.monthdayscalendar(vuosi, kuukausi)
 
     # Haetaan tapahtumat annetulle vuodelle ja kuukaudelle
-    tapahtuma_paivat = {päivä for (päivä, _) in tapahtumat.get((vuosi, kuukausi), [])}
-    tapahtuma_lista = tapahtumat.get((vuosi, kuukausi), []) # Lista päivä + kuvaus pareistacd
+    tapahtuma_lista = tapahtumat.get((vuosi, kuukausi), []) # Lista päivä + kuvaus pareista
+    tapahtuma_paivat = {päivä for (päivä, _, _) in tapahtuma_lista}
     # Muokataan kalenterin päivät ja lisätään tähdet tapahtumapäiville
     muokattu_kuukausi = []
     for viikko in kuukauden_paivat: # Käydään läpi viikot
@@ -99,33 +102,35 @@ def tarkastelu(vuosi, kuukausi, tapahtumat):
 
     if tapahtuma_lista:
         print("\nTapahtumat tässä kuussa:")
-        for päivä, kuvaus in sorted(tapahtuma_lista):
-            print(f"- {päivä}. päivä: {kuvaus}")
+        for päivä, kellonaika, kuvaus in sorted(tapahtuma_lista):
+            print(f"- {päivä}. päivä: {kuvaus} kello: {kellonaika}")
     else:
         print("Ei tapahtumia tässä kuussa.")
 
 
 # Lisää tapahtuman tiedostoon kalenteri.txt //Ehkä toimii??
 def tapahtuman_lisäys():
+    
     try:
-        with open(TIEDOSTO, "a") as file: # Avataan tiedosto muokkaus modessa
-            print("Tapahtuman lisäys -- esim. 2025 3 07")
-            try:
-                vuosi = int(input("Kerro vuosi: ")) 
-                kuukausi = int(input("Kerro kuukausi: ")) # Kerätään käyttäjältä tiedot vuodesta, kuukaudesta ja päivästä
-                päivä = int(input("Kerro päivä: "))
-            except ValueError: # Virhe, jos käyttäjä syöttää muuta, kuin kokonaislukuja
-                print("Virheellinen syöte. Anna numerot vuodelle, kuukaudelle ja päivälle.")
-            tapahtuman_kuvaus = (input("Kerro tapahtuman nimi: "))
-            tietue = f"{vuosi}, {kuukausi}, {päivä}, {tapahtuman_kuvaus}" # Talletetaan tiedot muuttujaan tietue
+        vuosi = int(input("Kerro vuosi: ")) 
+        kuukausi = int(input("Kerro kuukausi: ")) # Kerätään käyttäjältä tiedot vuodesta, kuukaudesta ja päivästä
+        päivä = int(input("Kerro päivä: "))
+        kellonaika = (input("Kerro kellonaika (HH:MM): "))
+        tapahtuman_kuvaus = (input("Kerro tapahtuman nimi: "))
+
+        if not kellonaika.count(":") == 1 or not all(x.isdigit() for x in kellonaika.split(":")): # Tarkistetaan, että kellonaika on oikeassa muodossa
+            print("Virheellinen kellonaika. Käytä muotoa HH:MM. ")
+            return
+        tietue = f"{vuosi}, {kuukausi}, {päivä}, {kellonaika}, {tapahtuman_kuvaus}" # Talletetaan tiedot muuttujaan tietue
+
+        with open(TIEDOSTO, "a") as file:
             file.write(tietue + "\n") # Kirjoitetaan tiedostoon haluttu tietue + rivinvaihto
             print("\nTapahtuma tallennettu onnistuneesti. ")
-    except FileNotFoundError:
-        print("Tapahtumien haussa kävi virhe") # Error printti, jos tiedostoa ei löydy
-    except Exception as e:
-        print(f"Odottamaton virhe: {e}") # Error printti muihin virheisiin
-    except OSError as e:
-        print(f"Virhe tiedostoon kirjoittamisessa: {e}") # Virheilmoitus muille tiedostovirheille
+    except ValueError: # Virhe, jos käyttäjä syöttää muuta, kuin kokonaislukuja
+        print("Virheellinen syöte. Anna numerot vuodelle, kuukaudelle ja päivälle.")
+
+    except ValueError:
+        print("Anna numerot vuodelle, kuukaudelle ja päivälle.")
 
 # Käyttäjä syöttää halutun tapahtuman ja se poistetaan ///KESKEN! //Ei toimi kunnolla
 def poista_tapahtuma(vuosi, kuukausi, tapahtumat):
