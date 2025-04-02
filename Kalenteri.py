@@ -41,15 +41,22 @@ def valikko():
 
 # Lukee tapahtumat tiedostosta ja lisää ne listalle //vitust kesken
 def lue_tapahtumat():
-    pass
-    tapahtumat = []
+    tapahtumat = {} # Kerätään tapahtumat
     try:
-        with open(TIEDOSTO, "r") as file:
-            for rivi in file:
+        with open(TIEDOSTO, "r") as file: # Avataan tiedosto lukutilassa
+            for rivi in file: # Käydään läpi rivi kerrallaan
                 try:
-                    osat = rivi.strip().split(" ", 3)
-                    if len(osat) == 4:
-                        vuosi, kuukausi, päivä, kuvaus = osat
+                    osat = rivi.strip().split(", ", 3) # Pilkotaan rivi pilkkujen ja välilyöntien kohdalta
+                    if len(osat) == 4: # Varmistetaan, että on oikea määrä osia
+                        vuosi, kuukausi, päivä, kuvaus = osat # Nimetään osat
+                        vuosi, kuukausi, päivä = int(vuosi), int(kuukausi), int(päivä) # Muutetaan kokonaisluvuiksi
+                        tapahtumat.setdefault((vuosi, kuukausi), []).append((päivä, kuvaus)) # Lisätään tapahtuma sanakirjaan niin, että vuodella ja kuukaudella on oma lista
+                except FileNotFoundError:
+                    print("Virhe tiedoston hakemisessa")
+                return tapahtumat
+
+                    
+
 
                
     except FileNotFoundError:
