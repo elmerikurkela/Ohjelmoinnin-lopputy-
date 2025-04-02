@@ -84,7 +84,7 @@ def tarkastelu(vuosi, kuukausi, tapahtumat):
         for paiva in viikko: # Käydään läpi viikonpäivät
             if paiva == 0:  # Tyhjät kohdat kalenterissa ennen kuukauden alkua
                 muokattu_viikko.append("")
-            elif paiva in tapahtumat:  # Jos päivälle on tapahtuma
+            elif paiva in tapahtuma_paivat:  # Jos päivälle on tapahtuma
                 muokattu_viikko.append(f"{colorama.Fore.RED}{paiva}*{colorama.Style.RESET_ALL}") # Lisätään punainen väri tapahtumapäiville
             else:  # Tavalliset päivät
                 muokattu_viikko.append(str(paiva))
