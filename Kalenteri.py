@@ -18,12 +18,20 @@ def valikko():
         print("3. Poista tapahtuma")
         print("4. Muokkaa tapahtumaa")
         print("5. Lopeta ohjelma")
-        try:
-            valinta = int(input("Valitse toiminto (1-5): ")) # Käyttäjä valitsee numeron, joka vastaa toimintoa
-        except ValueError:
-            print("Virheellinen syöte, valitse numero (1-5)")
+
+        # Tarkastetaan, että käyttäjä syöttää luvun 1-5 väliltä
+        while True:
+            try:
+                valinta = int(input("Valitse toiminto (1-5): ")) # Käyttäjä valitsee numeron, joka vastaa toimintoa
+                if valinta in [1, 2, 3, 4, 5]:
+                    break # Jos valinta on ok, päästään pois loopista
+                else:
+                    print("Valitse numero (1-5)")
+            except ValueError:
+                print("Virheellinen syöte, valitse numero (1-5)")
+
         if valinta == 1:
-            vuosi = int(input("Anna vuosi: ")) # //TÄHÄN TRY WITH
+            vuosi = int(input("Anna vuosi: "))
             kuukausi = int(input("Anna kuukausi: "))
             tapahtumat = lue_tapahtumat() # Paikanpitäjä tapahtumat // Tähän koodi, joka avaa tekstitiedoston, jossa tallennetut tapahtumat
             tarkastelu(vuosi, kuukausi, tapahtumat)
@@ -36,8 +44,6 @@ def valikko():
         elif valinta == 5:
             print('Ohjelma suljetaan. Kiitos käytöstä!')
             break
-        else:
-            print("Valitse numero (1-5)")
 
 # Lukee tapahtumat tiedostosta ja lisää ne listalle //vitust kesken
 def lue_tapahtumat():
