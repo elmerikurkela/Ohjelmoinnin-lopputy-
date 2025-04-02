@@ -8,7 +8,7 @@ colorama.init(autoreset=True)  # Alustaa coloraman
 TIEDOSTO = "kalenteri.txt"
 
 # Valikko, käyttäjä voi valita haluamansa toiminnon //Ei valmis //Tarvii Try With
-def valikko():
+def valikko(): 
     # Looppi, jotta ohjelma pyörii, kunnes käyttäjä valitsee lopettaa ///KESKEN!
     while True:
         # Printit
