@@ -2,3 +2,4 @@
 2025, 4, 1, Rastikierros
 
 2025, 4, 2, Musavisa
+2025, 4, 5, Lauantai
