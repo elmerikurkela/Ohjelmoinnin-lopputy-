@@ -51,16 +51,14 @@ def lue_tapahtumat():
                         vuosi, kuukausi, päivä, kuvaus = osat # Nimetään osat
                         vuosi, kuukausi, päivä = int(vuosi), int(kuukausi), int(päivä) # Muutetaan kokonaisluvuiksi
                         tapahtumat.setdefault((vuosi, kuukausi), []).append((päivä, kuvaus)) # Lisätään tapahtuma sanakirjaan niin, että vuodella ja kuukaudella on oma lista
-                except FileNotFoundError:
-                    print("Virhe tiedoston hakemisessa")
-                return tapahtumat
+                except ValueError:
+                    print(f"Virheelinen rivi: {rivi.strip()} ohitetaan.")
+                
 
-                    
-
-
-               
     except FileNotFoundError:
         print("Virhe tiedoston hakemisessa.")
+    
+    return tapahtumat
 
 
 # Tulostaa kuukausikalenterin ja merkitsee tapahtumapäivät tähdellä (*) //Ehkä toimii about oikein
