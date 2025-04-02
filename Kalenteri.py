@@ -18,7 +18,10 @@ def valikko():
         print("3. Poista tapahtuma")
         print("4. Muokkaa tapahtumaa")
         print("5. Lopeta ohjelma")
-        valinta = int(input("Valitse toiminto (1-5): ")) # Käyttäjä valitsee numeron, joka vastaa toimintoa
+        try:
+            valinta = int(input("Valitse toiminto (1-5): ")) # Käyttäjä valitsee numeron, joka vastaa toimintoa
+        except ValueError:
+            print("Virheellinen syöte, valitse numero (1-5)")
         if valinta == 1:
             vuosi = int(input("Anna vuosi: ")) # //TÄHÄN TRY WITH
             kuukausi = int(input("Anna kuukausi: "))
@@ -46,7 +49,7 @@ def lue_tapahtumat():
                 try:
                     osat = rivi.strip().split(" ", 3)
                     if len(osat) == 4:
-                        vuosi, kuukausi, päivä, kuvaus = osat:
+                        vuosi, kuukausi, päivä, kuvaus = osat
 
                
     except FileNotFoundError:
