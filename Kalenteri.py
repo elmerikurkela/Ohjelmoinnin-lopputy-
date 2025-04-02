@@ -76,7 +76,7 @@ def tarkastelu(vuosi, kuukausi, tapahtumat):
 
     # Haetaan tapahtumat annetulle vuodelle ja kuukaudelle
     tapahtuma_paivat = {päivä for (päivä, _) in tapahtumat.get((vuosi, kuukausi), [])}
-
+    tapahtuma_lista = tapahtumat.get((vuosi, kuukausi), []) # Lista päivä + kuvaus pareista
     # Muokataan kalenterin päivät ja lisätään tähdet tapahtumapäiville
     muokattu_kuukausi = []
     for viikko in kuukauden_paivat: # Käydään läpi viikot
@@ -94,6 +94,14 @@ def tarkastelu(vuosi, kuukausi, tapahtumat):
     otsikot = ["Ma", "Ti", "Ke", "To", "Pe", "La", "Su"]
     print(f"\n{calendar.month_name[kuukausi]} {vuosi}".center(30))
     print(tabulate(muokattu_kuukausi, headers=otsikot, tablefmt="grid"))
+
+    if tapahtuma_lista:
+        print("\nTapahtumat tässä kuussa:")
+        for päivä, kuvaus in sorted(tapahtuma_lista):
+            print(f"- {päivä}. päivä: {kuvaus}")
+    else:
+        print("Ei tapahtumia tässä kuussa.")
+
 
 # Lisää tapahtuman tiedostoon kalenteri.txt //Ehkä toimii??
 def tapahtuman_lisäys():
