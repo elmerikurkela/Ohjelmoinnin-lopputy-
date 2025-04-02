@@ -42,7 +42,9 @@ def valikko():
         elif valinta == 4:
             muokkaa_tapahtumaa()
         elif valinta == 5:
+            print("-" * 36)
             print('Ohjelma suljetaan. Kiitos käytöstä!')
+            print("-" * 36)
             break
 
 # Lukee tapahtumat tiedostosta ja lisää ne listalle //vitust kesken
