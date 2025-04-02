@@ -28,6 +28,11 @@ def valikko():
             tapahtuman_lisäys()
         elif valinta == 3:
             poista_tapahtuma()
+        elif valinta == 4:
+            muokkaa_tapahtumaa()
+        elif valinta == 5:
+            print('Ohjelma suljetaan. Kiitos käytöstä!')
+            break
         else:
             print("Valitse numero (1-5)")
 
