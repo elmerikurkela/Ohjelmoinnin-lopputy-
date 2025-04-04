@@ -116,11 +116,11 @@ def tapahtuman_lisäys():
         kuukausi = int(input("Kerro kuukausi: ")) # Kerätään käyttäjältä tiedot vuodesta, kuukaudesta ja päivästä
         päivä = int(input("Kerro päivä: "))
         kellonaika = (input("Kerro kellonaika (HH:MM): "))
-        tapahtuman_kuvaus = (input("Kerro tapahtuman nimi: "))
 
         if not kellonaika.count(":") == 1 or not all(x.isdigit() for x in kellonaika.split(":")): # Tarkistetaan, että kellonaika on oikeassa muodossa
             print("Virheellinen kellonaika. Käytä muotoa HH:MM. ")
             return
+        tapahtuman_kuvaus = (input("Kerro tapahtuman nimi: "))
         tietue = f"{vuosi}, {kuukausi}, {päivä}, {kellonaika}, {tapahtuman_kuvaus}" # Talletetaan tiedot muuttujaan tietue
 
         with open(TIEDOSTO, "a") as file:
