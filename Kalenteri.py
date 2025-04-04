@@ -7,9 +7,9 @@ colorama.init(autoreset=True)  # Alustaa coloraman
 # Määritellään oikea tiedoston nimi
 TIEDOSTO = "kalenteri.txt"
 
-# Valikko, käyttäjä voi valita haluamansa toiminnon //Ei valmis //Tarvii Try With
+# Valikko, käyttäjä voi valita haluamansa toiminnon
 def valikko(): 
-    # Looppi, jotta ohjelma pyörii, kunnes käyttäjä valitsee lopettaa ///KESKEN!
+    # Looppi, jotta ohjelma pyörii, kunnes käyttäjä valitsee lopettaa
     while True:
         # Printit
         print("\nValitse toiminto:")
@@ -108,7 +108,7 @@ def tarkastelu(vuosi, kuukausi, tapahtumat):
         print("Ei tapahtumia tässä kuussa.")
 
 
-# Lisää tapahtuman tiedostoon kalenteri.txt //Ehkä toimii??
+# Lisää tapahtuman tiedostoon kalenteri.txt
 def tapahtuman_lisäys():
     
     try:

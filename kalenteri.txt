@@ -3,3 +3,4 @@
 2025, 4, 10, 17:00, EerikinkadunApprot
 2025, 4, 11, 12:30, Testi
 2025, 4, 20, 22:22, Tapahtuma3
+205, 4, 4, 13:00, LiiketoiminnanTentti
