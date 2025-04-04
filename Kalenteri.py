@@ -47,7 +47,7 @@ def valikko():
             print("-" * 36)
             break
 
-# Lukee tapahtumat tiedostosta ja lisää ne listalle //vitust kesken
+# Lukee tapahtumat tiedostosta ja lisää ne listalle
 def lue_tapahtumat():
     tapahtumat = {} # Kerätään tapahtumat
     try:
