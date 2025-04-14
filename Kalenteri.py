@@ -224,7 +224,7 @@ def muokkaa_tapahtumaa():
 
 
 
-
+# Pääohjelma
 def main():
     print("-" * 33)
     print("Tervetuloa käyttämään kalenteria! ")
