@@ -147,10 +147,13 @@ def poista_tapahtuma():
         # Jos rivien määrä on sama, mitään ei poistunut
         if len(uudet_rivit) == len(rivit):
             print("Tapahtumaa ei löytynyt.")
-        # Kirjoitetaan tiedostoon uudet rivit
         else:
-            open('kalenteri.txt', 'w').writelines(uudet_rivit)
-            print("Tapahtuma poistettu.")
+            varmista = input("Haluatko varmasti poistaa tapahtuman? (k/e): ").strip().lower() # Varmistetaan poistotapahtuma
+            if varmista == 'k':
+                open('kalenteri.txt', 'w').writelines(uudet_rivit) # Kirjoitetaan tiedostoon uudet rivit
+                print("Tapahtuma poistettu.")
+            else:
+                print("Poisto peruutettu.") # Jos käyttäjä ei kuittaa poistoa, poistoa ei tapahdu
     except FileNotFoundError:
         print('Tiedostoa ei löytynyt.') # Virhe, jos tiedostoa ei löydy
     except Exception as e:
@@ -185,8 +188,12 @@ def muokkaa_tapahtumaa():
                 uusi_rivit.append(rivi) # Jos muokkausta ei tapahtunut, lisätään rivi sellaisenaan uuteen listaan
         # Kirjoitetaan uudet rivit tiedostoon
         if muokattu:
-            open('kalenteri.txt', 'w').writelines(uusi_rivit)
-            print("Tapahtuma muokattu.")
+            varmista = input("Haluatko tallentaa muutokset? (k/e): ").strip().lower() # Varmistetaan muokkaus
+            if varmista == 'k':
+                open('kalenteri.txt', 'w').writelines(uusi_rivit) # Kirjoitetaan tiedostoon uudet rivit
+                print("Tapahtuma muokattu.")
+            else:
+                print("Muokkaus peruutettu.") # Muokkaus perutaan, jos käyttäjä ei kuittaa
         else:
             print("Tapahtumaa ei löytynyt.")
     except FileNotFoundError:
