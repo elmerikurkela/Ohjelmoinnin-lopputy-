@@ -136,91 +136,63 @@ def tapahtuman_lisäys():
 
 def poista_tapahtuma():
     try:
-        infile = open('kalenteri.txt', 'r')
-        tapahtumat = infile.readlines()
-
-        if not tapahtumat:
-            print("Kalenteri on tyhjä.")
-            return
-
+        #Pyydetään käyttäjää antamaan poistettavan tapahtuman nimi
         hakusana = input("Anna poistettavan tapahtuman nimi tai osa siitä: ").strip().lower()
-        osumat = [(i, rivi) for i, rivi in enumerate(tapahtumat) if hakusana in rivi.lower()]
-
-        if not osumat:
-            print("Ei löytynyt vastaavia tapahtumia.")
-            return
-
-        print("Löytyneet tapahtumat:")
-        for idx, (i, rivi) in enumerate(osumat, 1):
-            print(f"{idx}. {rivi.strip()}")
-
-        valinta = int(input("Valitse poistettava tapahtuma (numero): "))
-        if 1 <= valinta <= len(osumat):
-            indeksi_poistettava = osumat[valinta - 1][0]
-            poistettava = tapahtumat.pop(indeksi_poistettava)
-            with open("kalenteri.txt", "w", encoding="utf-8") as tiedosto:
-                tiedosto.writelines(tapahtumat)
-            print(f"Tapahtuma poistettu: {poistettava.strip()}")
+        # Avataan kalenteri
+        infile = open('kalenteri.txt', 'r')
+        rivit = infile.readlines() # Luetaan tiedosto
+        infile.close()
+        # Suodatetaan rivit, joissa hakusana ei esiinny
+        uudet_rivit = [rivi for rivi in rivit if hakusana not in rivi.lower()]
+        # Jos rivien määrä on sama, mitään ei poistunut
+        if len(uudet_rivit) == len(rivit):
+            print("Tapahtumaa ei löytynyt.")
+        # Kirjoitetaan tiedostoon uudet rivit
         else:
-            print("Virheellinen valinta.")
+            open('kalenteri.txt', 'w').writelines(uudet_rivit)
+            print("Tapahtuma poistettu.")
     except FileNotFoundError:
-        print("Kalenteritiedostoa ei löytynyt.")
-    except ValueError:
-        print("Syötä kelvollinen numero.")
-#def poista_tapahtuma(vuosi, kuukausi, tapahtumat):
+        print('Tiedostoa ei löytynyt.') # Virhe, jos tiedostoa ei löydy
+    except Exception as e:
+        print(f'Tapahtui odottamaton virhe: {e}') # Virheilmoitus muille virheille
 
-    #try:
-        #with open(TIEDOSTO, "a") as file:
-            #for event in file:
-                #if event == tapahtumat:
-                    #event = ""
-                #else:
-                    #print("Päivälle ei ole tapahtumaa.")
-    #except FileNotFoundError:
-        #print("Tapahtumien haussa kävi virhe") # Error printti, jos tiedostoa ei löydy
-    #except Exception as e:
-        #print(f"Odottamaton virhe: {e}") # Error printti muihin virheisiin
-    #except OSError as e:
-        #print(f"Virhe tiedostoon kirjoittamisessa: {e}") # Virheilmoitus muille tiedostovirheille
 
 def muokkaa_tapahtumaa():
     try:
-        infile = open("kalenteri.txt", "r") #Avataan tiedosto lukutilassa
-        tapahtumat = infile.readlines()
-
-        if not tapahtumat:
-            print("Kalenteri on tyhjä.")
-            return
-
-        hakusana = input("Anna muokattavan tapahtuman nimi tai osa siitä: ").strip().lower() #Käyttäjä syöttää hakusanan
-        osumat = [(i, rivi) for i, rivi in enumerate(tapahtumat) if hakusana in rivi.lower()]
-
-        if not osumat:
-            print("Ei löytynyt vastaavia tapahtumia.")
-            return
-
-        print("Löytyneet tapahtumat:")
-        for idx, (i, rivi) in enumerate(osumat, 1):
-            print(f"{idx}. {rivi.strip()}")
-
-        valinta = int(input("Valitse muokattava tapahtuma (numero): "))
-        if 1 <= valinta <= len(osumat):
-            indeksi_muokattava = osumat[valinta - 1][0]
-            vanha = tapahtumat[indeksi_muokattava].strip()
-            uusi_pvm = input("Anna uusi päivämäärä (YYYY-MM-DD): ").strip()
-            uusi_kuvaus = input("Anna uusi tapahtuman kuvaus: ").strip()
-            tapahtumat[indeksi_muokattava] = f"{uusi_pvm};{uusi_kuvaus}\n"
-
-            with open("kalenteri.txt", "w", encoding="utf-8") as tiedosto:
-                tiedosto.writelines(tapahtumat)
-
-            print(f"Tapahtuma päivitetty:\nVanha: {vanha}\nUusi: {tapahtumat[indeksi_muokattava].strip()}")
+        hakusana = input("Anna muokattavan tapahtuman nimi tai osa siitä: ").strip().lower() #Pyydetään käyttäjää syöttämään muokattavan tapahtuman nimi
+    
+        infile = open('kalenteri.txt', 'r') # Avataan kalenteritiedosto
+        rivit = infile.readlines() # Luetaan tiedoston rivit
+        infile.close()
+    
+        uusi_rivit = [] #Kerätään uudet rivit
+        muokattu = False # Kertoo, onko tapahtumaa muokattu (oletuksena ei)
+    
+        for rivi in rivit: # Etsitään tiedostosta haluttu tapahtuma ja sitä ei ole vielä muokattu
+            if hakusana in rivi.lower() and not muokattu:
+                print("Vanha tapahtuma:", rivi.strip())
+                #Pyydetään käyttäjältä uudet tiedot
+                kuvaus = input("Uusi tapahtuman nimi: ")
+                vuosi = input("Uusi vuosi: ")
+                kuukausi = input("Uusi kuukausi: ")
+                päivä = input("Uusi päivä: ")
+                kellonaika = input("Uusi kellonaika (HH:MM): ")
+                # Muodostetaan uusi rivi
+                uusi_rivi = f"{vuosi}, {kuukausi}, {päivä}, {kellonaika}, {kuvaus}\n"
+                uusi_rivit.append(uusi_rivi)
+                muokattu = True # Merkitään, että tapahtumaa on muokattu
+            else:
+                uusi_rivit.append(rivi) # Jos muokkausta ei tapahtunut, lisätään rivi sellaisenaan uuteen listaan
+        # Kirjoitetaan uudet rivit tiedostoon
+        if muokattu:
+            open('kalenteri.txt', 'w').writelines(uusi_rivit)
+            print("Tapahtuma muokattu.")
         else:
-            print("Virheellinen valinta.")
+            print("Tapahtumaa ei löytynyt.")
     except FileNotFoundError:
-        print("Kalenteritiedostoa ei löytynyt.")
-    except ValueError:
-        print("Syötä kelvollinen numero.")
+        print('Tiedostoa ei löytynyt.') # Virhe, jos tiedostoa ei löydy
+    except Exception as e:
+        print(f'Tapahtui odottamaton virhe: {e}') #Virheilmoitus muille virheille
 
 
 
