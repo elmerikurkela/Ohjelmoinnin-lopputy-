@@ -72,7 +72,7 @@ def lue_tapahtumat():
     return tapahtumat
 
 
-# Tulostaa kuukausikalenterin ja merkitsee tapahtumapäivät tähdellä (*) //Ehkä toimii about oikein
+# Tulostaa kuukausikalenterin ja merkitsee tapahtumapäivät tähdellä (*)
 def tarkastelu(vuosi, kuukausi, tapahtumat):
 
     # Luodaan kalenteri, jossa viikko alkaa maanantaista

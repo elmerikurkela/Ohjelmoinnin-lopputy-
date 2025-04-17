@@ -1,6 +1,5 @@
 2025, 4, 27, 11:00 Sunnuntai
 2025, 4, 9, 16:30, IconicDuos
 2025, 4, 10, 17:00, EerikinkadunApprot
-2025, 4, 20, 22:22, Tapahtuma3
-205, 4, 4, 13:00, LiiketoiminnanTentti
 2025, 4, 4, 13:00, Liiketoiminnantentti
+2025, 4, 17, 14:00, Ohjelmoinnin demot
