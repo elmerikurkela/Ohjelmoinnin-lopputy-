@@ -132,7 +132,7 @@ def tapahtuman_lisäys():
     except ValueError:
         print("Anna numerot vuodelle, kuukaudelle ja päivälle.")
 
-# Käyttäjä syöttää halutun tapahtuman ja se poistetaan ///KESKEN! //Ei toimi kunnolla
+# Käyttäjä syöttää halutun tapahtuman ja se poistetaan
 
 def poista_tapahtuma():
     try:
